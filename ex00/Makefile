@@ -10,20 +10,20 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-        @echo "Linking..."
-        @$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "Linking..."
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-        @echo "Compiling $<..."
-        @$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-        @echo "Cleaning object files..."
-        @rm -f $(OBJS)
+	@echo "Cleaning object files..."
+	@rm -f $(OBJS)
 
 fclean: clean
-        @echo "Cleaning executable..."
-        @rm -f $(NAME)
+	@echo "Cleaning executable..."
+	@rm -f $(NAME)
 
 re: fclean all
 
