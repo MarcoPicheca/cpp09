@@ -12,8 +12,9 @@
           "-std=c++98",
           "-g",
           "${workspaceFolder}/ex00/main.cpp", // Cambia se il nome è diverso
+          "${workspaceFolder}/ex00/Bitcoin.cpp", // Cambia se il nome è diverso
           "-o",
-          "${workspaceFolder}/ex00/a.out"
+          "${workspaceFolder}/ex00/btc"
         ],
         "group": {
           "kind": "build",

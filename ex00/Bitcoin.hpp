@@ -6,7 +6,6 @@
 #include <vector>
 #include <sstream>
 #include <string>
-#include <stdexcept>
 
 class Bitcoin
 {
@@ -17,9 +16,6 @@ class Bitcoin
 		std::vector<unsigned int> _dayCsv;
 		std::vector<std::string> _dateCsv;
 		std::vector<double> _valuesInput;
-		std::vector<unsigned int> _yearInput;
-		std::vector<unsigned int> _monthInput;
-		std::vector<unsigned int> _dayInput;
 		std::vector<std::string> _dateInput;
 		double result;
 	public:
