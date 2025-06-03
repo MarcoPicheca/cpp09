@@ -7,11 +7,13 @@ int main(int argc, char** argv)
 		std::cerr << "Uso: ./RPN \"espressione in RPN\"\n";
 		return 1;
 	}
-
 	std::string input(argv[1]);
 	std::istringstream iss(input);
 	std::stack<int> s;
 	std::string token;
+	int b = -1;
+	int a = -1;
+	int result = -1;
 
 	while (iss >> token)
 	{
@@ -22,9 +24,9 @@ int main(int argc, char** argv)
 				std::cerr << "Errore: operandi insufficienti\n";
 				return 1;
 			}
-			int b = s.top(); s.pop();
-			int a = s.top(); s.pop();
-			int result;
+			b = s.top(); s.pop();
+			a = s.top(); s.pop();
+			result;
 
 			if (token == "+")
 				result = a + b;
