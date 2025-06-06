@@ -14,7 +14,6 @@ int main(int argc, char** argv)
 	int b = -1;
 	int a = -1;
 	int result = -1;
-
 	while (iss >> token)
 	{
 		if (token == "+" || token == "-" || token == "*" || token == "/")
