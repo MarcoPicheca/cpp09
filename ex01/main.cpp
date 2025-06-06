@@ -26,8 +26,6 @@ int main(int argc, char** argv)
 			}
 			b = s.top(); s.pop();
 			a = s.top(); s.pop();
-			result;
-
 			if (token == "+")
 				result = a + b;
 			else if (token == "-")
