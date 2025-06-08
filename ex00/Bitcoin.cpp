@@ -104,7 +104,8 @@ int Bitcoin::inputParser(std::string& arg)
 	int i = -1;
 	int ind = -1;
 
-	std::getline(file, line);
+	if (!std::getline(file, line))
+		return (inputError("Error: insert some input file", 0), 1);
 	while (std::getline(file, line))
 	{
 		++i;
