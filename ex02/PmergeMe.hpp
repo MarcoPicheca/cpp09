@@ -4,6 +4,7 @@
 #include <cmath>
 #include <set>
 #include <ctime>
+#include <algorithm>
 #include <deque>
 #include <sstream>
 #include <string>
@@ -17,71 +18,28 @@ class PmergeMe
 		std::deque<T> jacobSthal;
 		std::deque<T> max_list;
 		std::deque<T> min_list;
-		bool n_is_odd;
-	public:
+	public:	
 		PmergeMe();
 		~PmergeMe();
+
+		// CHECKERS
 		bool allDifferent();
 		int checkArg(const std::string& input);
 		int createMaxMinList();
 
-		/**
-		 * PRINT / DEBUG
-		 * 
-		 * 
-		 */
+		// PRINTER
 		void printDeque(std::deque<T> &list);
+
+		// GETTER
 		std::deque<T> getMaxList() const;
 		std::deque<T> getMinList() const;
-		// const std::deque<T> insertMinList() const;
-};
+		std::deque<T> getTokens() const;
+};		
 
+// FUNZIONE
 bool is_not_all_digits(const std::string& str);
 
-template <typename T>
-void jacobInsert(const T& element, std::deque<T>& dest)
-{
-	size_t mid = dest.begin() + (dest.end() - dest.begin()) / 2;
-	T tmp;
-	typename std::deque<T>::iterator it = dest.at(mid);
-	if (element > *it)
-	{
-		while (it != dest.end())
-		{
-			if (element < *it)
-			{
-				dest.insert(it, element);
-				return ;
-			}
-			it++;
-		}
-		dest.insert(std::next(it), element);
-	}
-}
-
-template <typename T>
-void instertMinlist(std::deque<T> min_list, std::deque<T> max_list, std::deque<T> jacob_list)
-{
-	typename std::deque<T>::iterator it = jacob_list.begin();
-	while (it != jacob_list.end())
-	{
-		jacobInsert(min_list.at(*it), max_list);
-		it++;
-	}
-	
-}
-
-template <typename T>
-std::deque<T> generateJacobsthal(int n)
-{
-	std::deque<T> J(n + 1, 0);
-	if (n >= 1)
-		J[1] = 1;
-	for (int i = 2; i <= n; ++i)
-		J[i] = J[i - 1] + 2 * J[i - 2];
-	return J;
-}
-
+// TEMPLATE MEMBER FTS
 template <typename T>
 std::deque<T> PmergeMe<T>::getMaxList() const
 {
@@ -95,30 +53,56 @@ std::deque<T> PmergeMe<T>::getMinList() const
 }
 
 template <typename T>
+std::deque<T> PmergeMe<T>::getTokens() const
+{
+	return this->tokens;
+}
+
+template <typename T>
 void PmergeMe<T>::printDeque(std::deque<T> &list)
 {
 	typename std::deque<T>::iterator it;
 
-	// std::cout << "MAX: " << std::endl;
-	// for (it = max_list.begin(); it != max_list.end(); it++)
-	// {
-	// 	std::cout << "	" << *it << std::endl;
-	// }
-	// std::cout << "min: " << std::endl;
-	// for (it = min_list.begin(); it != min_list.end(); it++)
-	// {
-	// 	std::cout << "	" << *it << std::endl;
-	// }
-	// std::cout << "tokens: " << std::endl;
-	// for (it = tokens.begin(); it != tokens.end(); it++)
-	// {
-	// 	std::cout << "	" << *it << std::endl;
-	// }
-	std::cout << "sort max list: " << std::endl;
+	std::cout << "MAX: " << std::endl;
+	for (it = max_list.begin(); it != max_list.end(); it++)
+	{
+		std::cout << "	" << *it << std::endl;
+	}
+	std::cout << "min: " << std::endl;
+	for (it = min_list.begin(); it != min_list.end(); it++)
+	{
+		std::cout << "	" << *it << std::endl;
+	}
+	std::cout << "tokens: " << std::endl;
+	for (it = tokens.begin(); it != tokens.end(); it++)
+	{
+		std::cout << "	" << *it << std::endl;
+	}
+	if (list.empty()) return ;
+	std::cout << "sorted list: " << std::endl;
 	for (it = list.begin(); it != list.end(); it++)
 	{
 		std::cout << "	" << *it << std::endl;
 	}
+}	
+
+template <typename T>
+int PmergeMe<T>::checkArg(const std::string& input)
+{
+	std::istringstream iss(input);
+	std::string tmp;
+	
+	while (iss >> tmp)
+	{
+		if (is_not_all_digits(tmp)) return (std::cerr << "Errore: token non valido: " << tmp << "\n", 1);
+		else
+		{
+			int value = std::atoi(tmp.c_str());
+			tokens.push_back(value);
+		}
+	}
+	if (!allDifferent()) return (std::cerr << "Errore: Doppi numeri\n", 1);
+	return 0;
 }
 
 template <typename T>
@@ -138,26 +122,9 @@ int PmergeMe<T>::createMaxMinList()
 		it = it + 2;
 	}
 	if (it != tokens.end())
-	{
-		n_is_odd = true;
 		min_list.push_back(*it);
-	}
-	else
-		n_is_odd = false;
 	return 0;
 }
-
-
-template <typename T>
-PmergeMe<T>::PmergeMe()
-{
-}
-
-template <typename T>
-PmergeMe<T>::~PmergeMe()
-{
-}
-
 
 
 template<typename T>
@@ -176,26 +143,103 @@ bool PmergeMe<T>::allDifferent()
 }
 
 template <typename T>
-int PmergeMe<T>::checkArg(const std::string& input)
+PmergeMe<T>::PmergeMe()
 {
-	std::istringstream iss(input);
-	std::string tmp;
-	
-	while (iss >> tmp)
-	{
-		if (is_not_all_digits(tmp))
-		return (std::cerr << "Errore: token non valido: " << tmp << "\n", 1);
-		else
-		{
-			int value = std::atoi(tmp.c_str());
-			tokens.push_back(value);
-		}
-	}
-	if (!allDifferent())
-	return (std::cerr << "Errore: Doppi numeri\n", 1);
-	return 0;
 }
 
+template <typename T>
+PmergeMe<T>::~PmergeMe()
+{
+}
+
+// TEMPLATE NON MEMBER FTS
+template <typename T>
+void insertionSort(T& element, std::deque<T>& dest)
+{
+	typename std::deque<T>::iterator it = dest.begin() + (dest.end() - dest.begin()) / 2;
+	if (element > *it)
+	{
+		while (it != dest.end())
+		{
+			if (element < *it)
+			{
+				dest.insert(it, element);
+				return ;
+			}	
+			it++;
+		}	
+		dest.insert(it, element);
+	}	
+	else if(element < *it)
+	{
+		while (it != dest.begin())
+		{
+			if (element > *it)
+			{
+				dest.insert(it + 1, element);
+				return ;
+			}	
+			it--;
+		}	
+		if (element > *it)
+		{
+			dest.insert(it + 1, element);
+			return ;
+		}	
+		else dest.insert(it, element);
+	}	
+}	
+
+template <typename T>
+std::deque<T> instertMinlist(std::deque<T>& min_list, std::deque<T>& max_list, std::deque<T>& jacob_list)
+{
+	typename std::deque<T>::iterator it = jacob_list.begin();
+	int i = 0;
+	while (it != jacob_list.end() && *it < static_cast<T>(min_list.size()))
+	{
+		if (i++ == 2)
+		{
+			it++;
+			continue;
+		}	
+		insertionSort(min_list[*it], max_list);
+		it++;
+	}	
+	i = 0;
+	for (it = min_list.begin(); it != min_list.end(); it++)
+	{
+		if (std::find(max_list.begin(), max_list.end(), *it) == max_list.end())
+			insertionSort(min_list[i], max_list);
+		i++;	
+	}	
+	std::deque<T> sorted(max_list);
+	return sorted;
+}	
+
+template <typename T>
+std::deque<T> generateJacobsthal(int n)
+{
+	std::deque<T> J(n, 0);
+
+	if (n >= 1)
+		J[1] = 1;
+	for (int i = 2; i < n; ++i)
+		J[i] = J[i - 1] + 2 * J[i - 2];
+	return J;
+}
+
+
+template <typename T>
+bool containsNonPositive(const std::deque<T>& tokens)
+{
+	typename std::deque<T>::const_iterator it;
+	for (it = tokens.begin(); it != tokens.end(); ++it)
+	{
+		if (*it <= 0)
+			return (std::cerr << "Errore: numeri non positivi\n", true);
+	}
+	return false;
+}
 
 template <typename T>
 void merge(std::deque<T> &list, int left, int median, int right)

@@ -8,21 +8,17 @@ int main (int ac, char *av[])
 		return 1;
 	}
 	const std::string input(av[1]);
-	PmergeMe<unsigned int> pm;
+	PmergeMe<long long> pm;
 	if (pm.checkArg(input))
 		return (std::cerr << "Error: wrong input" << std::endl, 1);
 	pm.createMaxMinList();
-	std::deque<unsigned int> max_list = pm.getMaxList();
-	std::deque<unsigned int> min_list = pm.getMinList();
-	std::deque<unsigned int> jacobSthal = generateJacobsthal<unsigned int>(min_list.size());
-	pm.printDeque(max_list);
+	if (containsNonPositive(pm.getTokens()))
+		return 1;
+	std::deque<long long> max_list = pm.getMaxList();
+	std::deque<long long> min_list = pm.getMinList();
+	std::deque<long long> jacobSthal = generateJacobsthal<long long>(min_list.size());
 	mergeSort(max_list, 0, max_list.size() - 1);
-	pm.printDeque(max_list);
-	// std::cout << "Before sorting: ";
-	// std::deque<unsigned int>::iterator it;
-	// // for (it = tokens.begin(); it + 1 != tokens.end(); it++)
-	// // 	std::cout << *it << " ";
-	// // std::cout << *it;
-	// // std::cout << std::endl;
+	std::deque<long long> sortedList = instertMinlist<long long>(min_list, max_list, jacobSthal);
+	pm.printDeque(sortedList);
 	return 0;
 }
