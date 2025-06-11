@@ -49,6 +49,7 @@
         "optional": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "ctime": "cpp"
+        "ctime": "cpp",
+        "set": "cpp"
     }
 }
