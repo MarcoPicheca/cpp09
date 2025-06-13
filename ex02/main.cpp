@@ -8,17 +8,13 @@ int main (int ac, char *av[])
 		return 1;
 	}
 	const std::string input(av[1]);
-	PmergeMe<long long> pm;
-	if (pm.checkArg(input))
-		return (std::cerr << "Error: wrong input" << std::endl, 1);
-	pm.createMaxMinList();
-	if (containsNonPositive(pm.getTokens()))
+	if (input.empty() || is_all_spaces(input))
+	{
+		std::cerr << "Error: wrong input" << std::endl;
 		return 1;
-	std::deque<long long> max_list = pm.getMaxList();
-	std::deque<long long> min_list = pm.getMinList();
-	std::deque<long long> jacobSthal = generateJacobsthal<long long>(min_list.size());
-	mergeSort(max_list, 0, max_list.size() - 1);
-	std::deque<long long> sortedList = instertMinlist<long long>(min_list, max_list, jacobSthal);
-	pm.printDeque(sortedList);
+	}
+	// if ft_merge
+	if (mergin_insert_sort(input))
+		return (std::cerr << "Error: wrong input" << std::endl, 1);
 	return 0;
 }

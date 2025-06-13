@@ -38,6 +38,8 @@ class PmergeMe
 
 // FUNZIONE
 bool is_not_all_digits(const std::string& str);
+bool is_all_spaces(const std::string& input);
+int mergin_insert_sort(const std::string& input);
 
 // TEMPLATE MEMBER FTS
 template <typename T>
@@ -63,27 +65,29 @@ void PmergeMe<T>::printDeque(std::deque<T> &list)
 {
 	typename std::deque<T>::iterator it;
 
-	std::cout << "MAX: " << std::endl;
-	for (it = max_list.begin(); it != max_list.end(); it++)
-	{
-		std::cout << "	" << *it << std::endl;
-	}
-	std::cout << "min: " << std::endl;
-	for (it = min_list.begin(); it != min_list.end(); it++)
-	{
-		std::cout << "	" << *it << std::endl;
-	}
-	std::cout << "tokens: " << std::endl;
+	// std::cout << "MAX: " << std::endl;
+	// for (it = max_list.begin(); it != max_list.end(); it++)
+	// {
+	// 	std::cout << "	" << *it << std::endl;
+	// }
+	// std::cout << "min: " << std::endl;
+	// for (it = min_list.begin(); it != min_list.end(); it++)
+	// {
+	// 	std::cout << "	" << *it << std::endl;
+	// }
+	std::cout << "tokens unsorted:";
 	for (it = tokens.begin(); it != tokens.end(); it++)
 	{
-		std::cout << "	" << *it << std::endl;
+		std::cout << " " << *it;
 	}
+	std::cout << std::endl;
 	if (list.empty()) return ;
-	std::cout << "sorted list: " << std::endl;
+	std::cout << "sorted list:";
 	for (it = list.begin(); it != list.end(); it++)
 	{
-		std::cout << "	" << *it << std::endl;
+		std::cout << " " << *it;
 	}
+	std::cout << std::endl;
 }	
 
 template <typename T>
