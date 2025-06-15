@@ -4,23 +4,23 @@
 #include <cmath>
 #include <set>
 #include <ctime>
+#include <sys/time.h>
 #include <algorithm>
 #include <deque>
 #include <list>
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <iomanip>
 
 template <typename T>
 class PmergeMe
 {
 	private:
 		std::deque<T> tokens;
-		std::deque<T> jacobSthal;
 		std::deque<T> max_deque;
 		std::deque<T> min_deque;
 		std::list<T> tokens_list;
-		std::list<T> jacobSthal;
 		std::list<T> max_list;
 		std::list<T> min_list;
 	public:
@@ -34,6 +34,7 @@ class PmergeMe
 		int createMaxMinList();
 		// PRINTER
 		void printDeque(std::deque<T> &deque);
+		void printList(std::list<T> &list);
 
 		// GETTER
 		std::deque<T> getMaxDeque() const;
@@ -50,5 +51,6 @@ class PmergeMe
 bool is_not_all_digits(const std::string& str);
 bool is_all_spaces(const std::string& input);
 int mergin_insert_sort(const std::string& input);
+double getTime();
 
 #endif
