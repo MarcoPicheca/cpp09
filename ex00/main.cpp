@@ -8,10 +8,20 @@ int main(int ac, char *av[])
 		return (1);
 	}
 	Bitcoin ciao;
-	ciao.csvParser();
+	try
+	{
+		ciao.csvParser();
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+		return 1;
+	}
+	
 	std::string arg;
 	arg.append(av[1]);
+	if (arg.empty())
+		return (std::cerr << "Error: empty input\n", 1);
 	ciao.inputParser(arg);
-	
 	return 0;
 }

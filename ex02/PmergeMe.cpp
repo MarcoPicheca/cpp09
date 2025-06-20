@@ -134,27 +134,30 @@ void	insertionSortList(T& min_item, std::list<T>& max)
 }
 
 template <typename T>
-std::list<T> instertMinList(std::list<T> min, std::list<T>& max, std::set<T>& jacob)
-{
-	T i = 0;
-	typename std::set<T>::iterator it_jacob = jacob.begin();
-	typename std::list<T>::iterator it_min = min.begin();
-	while (++it_jacob != jacob.end())
-	{
-		while (i != *it_jacob)
-		{
-			i++;
-			it_min++;
-		}
-		insertionSortList(*it_min, max);
-	}
-	for (it_min = min.begin(); it_min != min.end(); ++it_min)
-	{
-		if (std::find(max.begin(), max.end(), *it_min) == max.end())
-			insertionSortList(*it_min, max);
-	}
-	return max;
+std::list<T> instertMinList(std::list<T> min, std::list<T>& max, std::set<T>& jacob) {
+    T i = 0;
+    typename std::set<T>::iterator it_jacob = jacob.begin();
+    typename std::list<T>::iterator it_min = min.begin();
+
+    while (it_jacob != jacob.end()) {
+        while (i != *it_jacob) {
+            i++;
+            it_min++;
+        }
+        if (*it_min != -1)
+            insertionSortList(*it_min, max);
+        *it_min = -1;
+        it_jacob++;
+    }
+
+    for (it_min = min.begin(); it_min != min.end(); ++it_min) {
+        if (*it_min != -1 && std::find(max.begin(), max.end(), *it_min) == max.end())
+            insertionSortList(*it_min, max);
+    }
+
+    return max;
 }
+
 
 template <typename T>
 void sortingList(PmergeMe<T>& pm)

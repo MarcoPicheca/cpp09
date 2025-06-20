@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <exception>
 #include <string>
 
 class Bitcoin
@@ -24,7 +25,7 @@ class Bitcoin
 		Bitcoin& operator=(const Bitcoin& copy);
 		void	csvParser();
 		int		inputParser(std::string& arg);
-		void	inputError(const char * str, int flag);
+		void	inputError(const char * str, int flag, int index);
 		int		findClosestDate(unsigned int y, unsigned int m, unsigned int d);
 		~Bitcoin();
 };
